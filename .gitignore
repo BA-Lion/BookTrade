@@ -1,0 +1,64 @@
+# 虚拟环境 (Virtual Environment)
+# 这是最关键的一行，确保 venv 文件夹被完全忽略
+venv/
+env/
+.env
+.venv
+ENV/
+
+# Python 编译文件 (Bytecode)
+# Python 运行时生成的缓存文件，无需版本控制
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 分发/打包文件 (Distribution / Packaging)
+# 如果你使用 setuptools 或 pipenv 等工具打包项目，这些文件夹会被生成
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Flask 相关 (Flask Specific)
+# Flask 在开发模式下可能生成的实例文件夹
+instance/
+.webassets-cache
+
+# 环境变量文件 (Environment Variables)
+# 不要将包含密码、密钥等敏感信息的 .env 文件上传！
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 日志文件 (Logs)
+logs/
+*.log
+
+# 编辑器/IDE 配置文件 (Editor/IDE Configuration)
+# 避免将你的本地开发工具配置上传，以免影响团队其他成员
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 操作系统文件 (Operating System Files)
+# 不同操作系统会生成的垃圾文件
+.DS_Store
+Thumbs.db
