@@ -41,6 +41,35 @@ def fetch_one(sql,params):
         if conn:
             conn.close()  # 将链接交还给连接池
 
+#可以获取所有符合条件数据的集成
+def fetch_all(sql,params):
+     # 初始化连接和游标为None，以便在finally中安全检查
+    conn = None
+    cursor = None
+    try:
+        conn=POOL.connection()
+        #从数据库中获取字典类型数据
+        cursor=conn.cursor(cursor=cursors.DictCursor)
+        cursor.execute(sql,params)
+        result=cursor.fetchall()
+        cursor.close()
+        conn.close()#将链接交还给连接池
+        return result
+    except Exception as e:
+        # 打印异常信息，方便调试
+        print(f"数据库查询出错:")
+        print(f"SQL: {sql}")
+        print(f"Params: {params}")
+        print(f"Error: {e}")
+        # 发生异常时返回None
+        return None
+    finally:
+        # 确保游标和连接被关闭，即使发生异常
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()  # 将链接交还给连接池
+
 def execute_write(sql, params):
     """
     执行数据库写入操作（INSERT, UPDATE, DELETE）

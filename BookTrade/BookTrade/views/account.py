@@ -1,4 +1,4 @@
-from flask import Blueprint,request,render_template,redirect
+from flask import Blueprint,request,render_template,redirect,sessions
 from utils import db#自定义数据库操作包
 
 ac=Blueprint("account",__name__)
@@ -16,6 +16,7 @@ def login():
     user_dict=db.fetch_one("select * from user where Account=%s and Password=%s",[account,password])
     if user_dict:
         #登录成功，后端跳转至应用初始界面，还没做，以“登陆成功做测试”
+        sessions["user_info"]={"role":user_dict['role']}
         return "登陆成功"
     #失败
     return render_template("login.html",error="用户名或密码错误")
