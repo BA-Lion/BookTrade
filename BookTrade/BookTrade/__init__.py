@@ -1,4 +1,4 @@
-from flask import Flask,request
+from flask import Flask,request,session,redirect
 
 #拦截器
 def auth():
@@ -8,7 +8,17 @@ def auth():
     #登录不拦截
     if request.path=='/login':
         return
-    
+    #注册不拦截
+    if request.path=='/regist':
+        return
+    user_info=session.get("user_info")
+    #拦截非买家用户
+    if request.path=='/seller_put_conduct':
+        if user_info['role']>1:
+            return
+        return redirect('/login')
+
+
 
 def create_app():
     app=Flask(__name__)
