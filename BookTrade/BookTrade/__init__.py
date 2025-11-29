@@ -22,6 +22,8 @@ def auth():
 
 def create_app():
     app=Flask(__name__)
+    #密钥
+    app.secret_key='123456'
     app.before_request(auth)
     from .views import account
     from .views import homePage

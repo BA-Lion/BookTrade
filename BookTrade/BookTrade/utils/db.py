@@ -93,8 +93,11 @@ def execute_write(sql, params):
         # 4. 提交事务（这是写入操作必不可少的一步）
         conn.commit()
         
-        # 5. 返回受影响的行数
-        return affected_rows
+        # 如果是插入操作，返回最新自增主键
+        if sql.strip().upper().startswith("INSERT"):
+            return cursor.lastrowid  # 返回最新自增主键
+        else:
+            return affected_rows#返回受影响的行数
 
     except Exception as e:
         # 6. 如果发生异常，打印错误信息并回滚事务
