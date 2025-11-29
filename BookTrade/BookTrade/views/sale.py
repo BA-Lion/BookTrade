@@ -1,7 +1,8 @@
 from flask import Blueprint,request,render_template,redirect,session
 from utils import db#自定义数据库操作包
 
-ac=Blueprint("order",__name__)
+#买书操作集成
+ac=Blueprint("sale",__name__)
 
 @ac.route('/seller_put_conduct',methods=["GET","POST"])
 def seller_put_conduct():
@@ -20,7 +21,7 @@ def seller_put_conduct():
     #先将书籍信息加入book表
     new_book_id=db.execute_write("insert into book (seller_id,name,author,condition,price,description) values(%s,%s,%s,%s,%s,%s)",[seller_id,book_name,author,condition,price,description])
     #再将书籍分类信息加入book_category表
-    category_list=request.form.get("category")
+    category_list=request.form.getlist("category")
     for category in category_list:
         db.execute_write("insert into book_category (book_id,category_id) values(%s,%s)",[new_book_id,category])
     return redirect("/my_onsale_book")

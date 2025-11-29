@@ -32,6 +32,13 @@ def inquery():
     sql = "select * from book where name LIKE %s"
     book_list = db.fetch_all(sql, [f"%{book_name}%"])  # 参数需用列表/元组包裹
     return render_template("inquery_page.html",book_list=book_list)
+
+#书籍具体信息查看功能
+@ac.route('/book_detail',methods=["GET","POST"])
+def book_detail():
+    book_id=request.form.get("book_id","").strip()#去除首尾空格
+    book_dict=db.fetch_one("select * from book where id=%s",[book_id])
+    return render_template("book_detail.html",book_dict=book_dict)
     
 
 
