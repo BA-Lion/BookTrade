@@ -21,7 +21,7 @@ def auth():
             return
         else:
             return redirect('/apply_to_be_seller')
-    if request.path=='/my_onsale_book':
+    if request.path=='/my_sale_record':
         #未登录
         if not user_info:
             return redirect('/login')
@@ -59,6 +59,17 @@ def auth():
         #不是管理员，首页
         else:
             return render_template("homePage.html",error="权限不足")
+        
+    if request.path=='/buy':
+        #未登录
+        if not user_info:
+            return redirect('/login')
+        return
+    if request.path=='/my_order':
+        #未登录
+        if not user_info:
+            return redirect('/login')
+        return
 
 
 

@@ -7,7 +7,7 @@ ac=Blueprint("homePage",__name__)
 @ac.route('/',methods=["GET","POST"])
 def homePage():
     #获取书籍订单
-    book_list=db.fetch_all("select * from book",[])
+    book_list=db.fetch_all("select * from book where status='在售",[])
     user_info=session.get("user_info")
     if user_info:
         role_list={"role":user_info["role"],"name":user_info["name"]}
@@ -29,7 +29,7 @@ def inquery():
     book_name=request.form.get("book_name","").strip()#去除首尾空格
     if not book_name:
         return redirect("/")
-    sql = "select * from book where name LIKE %s"
+    sql = "select * from book where name LIKE %s and status='在售'"
     book_list = db.fetch_all(sql, [f"%{book_name}%"])  # 参数需用列表/元组包裹
     return render_template("inquery_page.html",book_list=book_list)
 

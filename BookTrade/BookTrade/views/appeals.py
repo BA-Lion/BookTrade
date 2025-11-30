@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, redirect, session, url_fo
 from utils import db  # 自定义数据库操作包
 
 # 创建申诉功能的 Blueprint
-ap = Blueprint("appeal", __name__)
+ac = Blueprint("appeal", __name__)
 
 
 # ----------------------------------------------------------------
@@ -10,15 +10,11 @@ ap = Blueprint("appeal", __name__)
 # ----------------------------------------------------------------
 
 # 1. 用户提交申诉
-@ap.route('/submit_appeal', methods=["GET", "POST"])
+@ac.route('/submit_appeal', methods=["GET", "POST"])
 def submit_appeal():
     # 鉴权：确保用户已登录
     
     user_info = session.get("user_info")
-    """
-    if not user_info:
-        return redirect("/login")  # 如果未登录，跳转到登录页
-    """
 
     if request.method == "GET":
         # 获取URL参数中的订单ID（如果是从订单列表点击“申诉”过来的）
@@ -49,13 +45,9 @@ def submit_appeal():
 
 
 # 2. 用户查看自己的申诉历史
-@ap.route('/my_appeals', methods=["GET"])
+@ac.route('/my_appeals', methods=["GET"])
 def my_appeals():
     user_info = session.get("user_info")
-    """
-    if not user_info:
-        return redirect("/login")
-    """
 
     user_id = user_info["id"]
 
@@ -73,13 +65,9 @@ def my_appeals():
 # ----------------------------------------------------------------
 
 # 3. 管理员查看及处理申诉
-@ap.route('/manager_appeal_list', methods=["GET"])
+@ac.route('/manager_appeal_list', methods=["GET"])
 def manager_appeal_list():
     user_info = session.get("user_info")
-    """
-    if not user_info or user_info.get("role") != 0:
-        return "无权访问", 403
-    """
 
     # 获取筛选状态，默认显示待处理
     status_filter = request.args.get("status", "待处理")
@@ -98,15 +86,16 @@ def manager_appeal_list():
 
 
 # 4. 管理员提交处理结果
-@ap.route('/manager_handle_appeal', methods=["POST"])
+@ac.route('/manager_handle_appeal', methods=["POST"])
 def manager_handle_appeal():
     user_info = session.get("user_info")
-    """
-    if not user_info or user_info.get("role") != 3:
-        return "无权访问", 403
-    """
-
-    # 获取表单数据
+    #增加展示申诉具体信息
+    if request.method == "GET":
+        appeal_id = request.args.get("appeal_id")
+        sql = "SELECT * FROM appeals WHERE Id = %s"
+        appeal = db.fetch_one(sql, [appeal_id])
+        return render_template("admin_appeal_detail.html", appeal=appeal)
+    # 获取管理员回复
     appeal_id = request.form.get("appeal_id")
     reply_content = request.form.get("reply", "").strip()
     action = request.form.get("action")
