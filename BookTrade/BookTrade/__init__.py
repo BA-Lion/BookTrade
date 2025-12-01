@@ -49,7 +49,7 @@ def auth():
         else:
             return render_template("homePage.html",error="权限不足")
         
-    if request.path=='/manager_book_list':
+    if request.path=='/manager_category':
         #未登录
         if not user_info:
             return redirect('/login')
@@ -70,6 +70,27 @@ def auth():
         if not user_info:
             return redirect('/login')
         return
+    if request.path=='/under_carriage':
+        if not user_info:
+            return redirect('/login')
+        elif user_info['role']>1:
+            return
+        else:
+            return render_template("homePage.html",error="请申请成为卖家")
+    if request.path=='/apply_to_be_seller':
+        if not user_info:
+            return redirect('/login')
+        return
+    if request.path=='/application_status':
+        if not user_info:
+            return redirect('/login')
+        return
+    if request.path=='application_list':
+        if not user_info:
+            return redirect('/login')
+        if user_info['role']!=3:
+            return render_template("homePage.html",error="权限不足")
+        return
 
 
 
@@ -82,6 +103,8 @@ def create_app():
     from .views import homePage
     from .views import sale
     from .views import appeals
+    from .views import buyer
+    from .views import seller_right
     #其他功能导包暂时省略
 
     #导入登陆相关api
@@ -89,5 +112,7 @@ def create_app():
     app.register_blueprint(homePage.ac)
     app.register_blueprint(sale.ac)
     app.register_blueprint(appeals.ac)
+    app.register_blueprint(buyer.ac)
+    app.register_blueprint(seller_right.ac)
 
     return app

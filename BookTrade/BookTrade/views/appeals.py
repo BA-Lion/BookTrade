@@ -89,12 +89,6 @@ def manager_appeal_list():
 @ac.route('/manager_handle_appeal', methods=["POST"])
 def manager_handle_appeal():
     user_info = session.get("user_info")
-    #增加展示申诉具体信息
-    if request.method == "GET":
-        appeal_id = request.args.get("appeal_id")
-        sql = "SELECT * FROM appeals WHERE Id = %s"
-        appeal = db.fetch_one(sql, [appeal_id])
-        return render_template("admin_appeal_detail.html", appeal=appeal)
     # 获取管理员回复
     appeal_id = request.form.get("appeal_id")
     reply_content = request.form.get("reply", "").strip()

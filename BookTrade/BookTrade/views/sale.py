@@ -26,6 +26,16 @@ def seller_put_conduct():
         db.execute_write("insert into book_category (book_id,category_id) values(%s,%s)",[new_book_id,category])
     return redirect("/my_sale_record")
 
+#下架书籍
+@ac.route('/under_carriage',methods=["GET","POST"])
+def under_carriage():
+    book_id=request.form.get("book_id")
+    #从bookcategory中删除book_id对应的数据
+    db.execute_write("delete from book_category where book_id=%s",[book_id])
+    #从book表中删除book_id对应的数据
+    db.execute_write("delete from book where book_id=%s",[book_id])
+    return redirect("/my_sale_record")
+
 
 #用户查看自己的出售书籍信息
 @ac.route('/my_sale_record',methods=["GET","POST"])
