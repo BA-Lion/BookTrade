@@ -1,5 +1,5 @@
 from flask import Blueprint,request,render_template,redirect,session
-from utils import db#自定义数据库操作包
+from BookTrade.utils import db#自定义数据库操作包
 
 ac=Blueprint("buyer",__name__)
 #直接在商品详情页调用，向该api发送post请求

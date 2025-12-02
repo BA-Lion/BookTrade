@@ -1,5 +1,5 @@
 from flask import Blueprint,request,render_template,redirect,session
-from utils import db#自定义数据库操作包
+from BookTrade.utils import db#自定义数据库操作包
 
 #买书操作集成
 ac=Blueprint("sale",__name__)

@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template, redirect, session, url_for
-from utils import db  # 自定义数据库操作包
+from BookTrade.utils import db  # 自定义数据库操作包
 
 # 创建申诉功能的 Blueprint
 ac = Blueprint("appeal", __name__)

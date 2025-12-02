@@ -11,7 +11,7 @@ POOL=PooledDB(
     setsession=[],
     ping=0,
 
-    host='113.44.77.78',port=3360,user='SW_developer1',passwd='d8D@8B_^34R',charset='utf8',db='softwareproject'
+    host='113.44.77.78',port=3306,user='SW_developer1',passwd='d8D@8B_^34R',charset='utf8',db='softwareproject'
 )
 def fetch_one(sql,params):
     # 初始化连接和游标为None，以便在finally中安全检查
